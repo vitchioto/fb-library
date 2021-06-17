@@ -6,25 +6,36 @@
   <router-view/>
 </template>
 
+<script>
+import firebase from 'firebase/app';
+import 'firebase/analytics';
+import 'firebase/auth';
+
+export default {
+  data() {
+    return {
+      firebaseObject: null,
+    };
+  },
+  created() {
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: 'AIzaSyDdXezs1XBtANM9KDPjZ794ciGVud1spBY',
+      authDomain: 'vv-library.firebaseapp.com',
+      projectId: 'vv-library',
+      storageBucket: 'vv-library.appspot.com',
+      messagingSenderId: '936690418524',
+      appId: '1:936690418524:web:2a5b1554b9a9245a153799',
+      measurementId: 'G-KG8R6NNTYR',
+    };
+      // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    this.firebaseObject = firebase;
+  },
+};
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>
