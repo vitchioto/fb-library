@@ -1,12 +1,25 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="app">
+    <div
+      v-if="userId"
+      class="library"
+    >
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/my-books">My Books</router-link>
+        <router-link to="/my-rented-books">My Rented Books</router-link>
+      </div>
+      <router-view/>
+    </div>
+    <div
+      v-else
+      class="log-in-page"
+    >
+      <button @click="logIn()">
+        Log In
+      </button>
+    </div>
   </div>
-  <router-view/>
-  <button @click="logIn()">
-    Log In
-  </button>
 </template>
 
 <script>
@@ -19,6 +32,11 @@ export default {
     return {
       firebaseObject: null,
     };
+  },
+  computed: {
+    userId() {
+      return this.$store.state.userId;
+    },
   },
   created() {
     // Your web app's Firebase configuration
@@ -41,10 +59,8 @@ export default {
   methods: {
     loadUser() {
       firebase.auth().onAuthStateChanged((user) => {
-        console.log('called');
         this.$store.commit('SET_USER_ID', user.uid);
         this.$store.dispatch('getAccessToken').then((userToken) => {
-          console.log(userToken);
           this.$store.commit('SET_USER_TOKEN', userToken);
         });
       });
