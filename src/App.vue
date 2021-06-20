@@ -4,6 +4,9 @@
     <router-link to="/about">About</router-link>
   </div>
   <router-view/>
+  <button @click="logIn()">
+    Log In
+  </button>
 </template>
 
 <script>
@@ -32,6 +35,38 @@ export default {
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
     this.firebaseObject = firebase;
+
+    this.loadUser();
+  },
+  methods: {
+    loadUser() {
+      firebase.auth().onAuthStateChanged((user) => {
+        console.log('called');
+        this.$store.commit('SET_USER_ID', user.uid);
+        this.$store.dispatch('getAccessToken').then((userToken) => {
+          console.log(userToken);
+          this.$store.commit('SET_USER_TOKEN', userToken);
+        });
+      });
+    },
+    logIn() {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      provider.addScope('user_friends');
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          const { accessToken } = result.credential;
+          const userId = result.user.uid;
+
+          this.$store.commit('SET_USER_ID', userId);
+          this.$store.dispatch('submitAccessToken', accessToken);
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          console.error('error', error);
+        });
+    },
   },
 };
 </script>
