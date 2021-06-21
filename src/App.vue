@@ -6,7 +6,7 @@
     >
       <div id="nav">
         <router-link to="/">Home</router-link> |
-        <router-link to="/my-books">My Books</router-link>
+        <router-link to="/my-books">My Books</router-link> |
         <router-link to="/my-rented-books">My Rented Books</router-link>
       </div>
       <router-view/>

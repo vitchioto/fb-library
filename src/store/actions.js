@@ -26,4 +26,14 @@ export default {
       });
     });
   },
+  async submitBook({ state }, payload) {
+    const app = firebase.app();
+    const db = firebase.firestore(app);
+
+    console.log(payload);
+    await db.collection('fbAccessTokens').add({
+      uid: state.userId,
+      ...payload,
+    });
+  },
 };
