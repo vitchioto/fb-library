@@ -58,11 +58,14 @@ export default {
   },
   methods: {
     loadUser() {
-      firebase.auth().onAuthStateChanged((user) => {
+      firebase.auth().onAuthStateChanged(async (user) => {
+        console.log('user', user);
         this.$store.commit('SET_USER_ID', user.uid);
-        this.$store.dispatch('getAccessToken').then((userToken) => {
-          this.$store.commit('SET_USER_TOKEN', userToken);
-        });
+        this.$store.commit('SET_USER_DATA', user.providerData[0]);
+        const userToken = await this.$store.dispatch('getAccessToken');
+        this.$store.commit('SET_USER_TOKEN', userToken);
+        await this.$store.dispatch('getFriends');
+        this.$store.dispatch('getBooks');
       });
     },
     logIn() {
@@ -77,6 +80,7 @@ export default {
 
           this.$store.commit('SET_USER_ID', userId);
           this.$store.dispatch('submitAccessToken', accessToken);
+          this.$store.dispatch('getFriends');
         })
         .catch((error) => {
           // Handle Errors here.

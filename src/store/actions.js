@@ -14,6 +14,39 @@ export default {
     });
     return token;
   },
+  async getBooks({ state }) {
+    const app = firebase.app();
+    const db = firebase.firestore(app);
+    const ids = [...state.friendIds, state.userData.uid];
+    const books = [];
+
+    const querySnapshot = await db.collection('books').where('fbId', 'in', ids).get();
+    querySnapshot.forEach((doc) => {
+      const record = doc.data();
+      books.push(record);
+    });
+    console.log('books', books);
+  },
+  async getFriends({ state, commit }) {
+    const token = state.userToken;
+    const response = await fetch(`https://graph.facebook.com/me/friends?access_token=${token}`);
+    const data = await response.json();
+    const friendIds = data.data.map((item) => item.id);
+    commit('SET_FRIEND_IDS', friendIds);
+  },
+  async getMyBooks({ state }) {
+    const app = firebase.app();
+    const db = firebase.firestore(app);
+    const fbId = state.userData.uid;
+    const books = [];
+
+    const querySnapshot = await db.collection('books').where('fbId', '==', fbId).get();
+    querySnapshot.forEach((doc) => {
+      const record = doc.data();
+      books.push(record);
+    });
+    console.log('books', books);
+  },
   submitAccessToken({ state }, payload) {
     // eslint-disable-next-line no-unused-vars
     return new Promise((resolve, reject) => {
@@ -31,7 +64,9 @@ export default {
     const db = firebase.firestore(app);
 
     console.log(payload);
-    await db.collection('fbAccessTokens').add({
+    await db.collection('books').add({
+      displayName: state.userData.displayName,
+      fbId: state.userData.uid,
       uid: state.userId,
       ...payload,
     });
