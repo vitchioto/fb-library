@@ -4,12 +4,7 @@
       v-if="userId && loaded"
       class="library"
     >
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/my-books">My Books</router-link> |
-        <router-link to="/my-rented-books">My Rented Books</router-link>
-      </div>
-      <router-view/>
+      <Home />
     </div>
     <div
       v-if="!userId"
@@ -26,6 +21,7 @@
 import firebase from 'firebase/app';
 import 'firebase/analytics';
 import 'firebase/auth';
+import Home from '@/views/Home.vue';
 
 export default {
   data() {
@@ -33,6 +29,9 @@ export default {
       firebaseObject: null,
       loaded: false,
     };
+  },
+  components: {
+    Home,
   },
   computed: {
     userId() {

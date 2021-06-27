@@ -6,7 +6,6 @@
     >
     <div
       class="list"
-      :class="{'list--alt': showFunctions}"
     >
       <div
         class="list_label"
@@ -29,7 +28,6 @@
         v-text="'Owner'"
       />
       <div
-        v-if="showFunctions"
         class="list_label"
         v-text="'Functions'"
       />
@@ -58,7 +56,7 @@
           v-html="book.displayName"
         />
         <div
-          v-if="showFunctions"
+          v-if="true"
           class="book__functions"
         >
           <button>b</button>
@@ -77,10 +75,6 @@ export default {
     books: {
       type: Array,
       required: true,
-    },
-    showFunctions: {
-      type: Boolean,
-      default: false,
     },
   },
   data() {
@@ -104,10 +98,6 @@ export default {
 <style lang="scss">
 .list {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-
-  &--alt {
-    grid-template-columns: repeat(6, 1fr);
-  }
+  grid-template-columns: repeat(6, 1fr);
 }
 </style>

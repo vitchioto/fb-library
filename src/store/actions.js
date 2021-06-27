@@ -30,7 +30,7 @@ export default {
   },
   async getFriends({ state, commit }) {
     const token = state.userToken;
-    const response = await fetch(`https://graph.facebook.com/me/friends?access_token=${token}`);
+    const response = await fetch(`https://graph.facebook.com/me/friends?limit=5000&access_token=${token}`);
     const data = await response.json();
     const friendIds = data.data.map((item) => item.id);
     commit('SET_FRIEND_IDS', friendIds);
