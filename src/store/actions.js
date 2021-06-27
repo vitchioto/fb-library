@@ -26,6 +26,7 @@ export default {
       books.push(record);
     });
     console.log('books', books);
+    return books;
   },
   async getFriends({ state, commit }) {
     const token = state.userToken;
@@ -46,6 +47,7 @@ export default {
       books.push(record);
     });
     console.log('books', books);
+    return books;
   },
   submitAccessToken({ state }, payload) {
     // eslint-disable-next-line no-unused-vars

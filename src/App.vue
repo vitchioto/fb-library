@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <div
-      v-if="userId"
+      v-if="userId && loaded"
       class="library"
     >
       <div id="nav">
@@ -12,7 +12,7 @@
       <router-view/>
     </div>
     <div
-      v-else
+      v-if="!userId"
       class="log-in-page"
     >
       <button @click="logIn()">
@@ -31,6 +31,7 @@ export default {
   data() {
     return {
       firebaseObject: null,
+      loaded: false,
     };
   },
   computed: {
@@ -65,7 +66,7 @@ export default {
         const userToken = await this.$store.dispatch('getAccessToken');
         this.$store.commit('SET_USER_TOKEN', userToken);
         await this.$store.dispatch('getFriends');
-        this.$store.dispatch('getBooks');
+        this.loaded = true;
       });
     },
     logIn() {

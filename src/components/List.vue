@@ -6,7 +6,33 @@
     >
     <div
       class="list"
+      :class="{'list--alt': showFunctions}"
     >
+      <div
+        class="list_label"
+        v-text="'Title'"
+      />
+      <div
+        class="list_label"
+        v-text="'Author'"
+      />
+      <div
+        class="list_label"
+        v-text="'Theme'"
+      />
+      <div
+        class="list_label"
+        v-text="'Language'"
+      />
+      <div
+        class="list_label"
+        v-text="'Owner'"
+      />
+      <div
+        v-if="showFunctions"
+        class="list_label"
+        v-text="'Functions'"
+      />
       <template
         v-for="(book, index) in filteredBooks"
         :key="index"
@@ -27,6 +53,19 @@
           class="book__language"
           v-html="book.language"
         />
+        <div
+          class="book__owner"
+          v-html="book.displayName"
+        />
+        <div
+          v-if="showFunctions"
+          class="book__functions"
+        >
+          <button>b</button>
+          <button>r</button>
+          <button>e</button>
+          <button>d</button>
+        </div>
       </template>
     </div>
   </div>
@@ -34,28 +73,18 @@
 
 <script>
 export default {
+  props: {
+    books: {
+      type: Array,
+      required: true,
+    },
+    showFunctions: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      books: [
-        {
-          title: 'Nazov knihy',
-          author: 'Stephen King',
-          theme: 'Dobrodruzna',
-          language: 'slovenský',
-        },
-        {
-          title: 'daco dalsie',
-          author: 'George R.R. Martin',
-          theme: 'Dobrodruzna',
-          language: 'český',
-        },
-        {
-          title: 'Ina kniha',
-          author: 'Stephen King',
-          theme: 'vedecka',
-          language: 'slovenský',
-        },
-      ],
       filterString: null,
     };
   },
@@ -75,6 +104,10 @@ export default {
 <style lang="scss">
 .list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+
+  &--alt {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 </style>

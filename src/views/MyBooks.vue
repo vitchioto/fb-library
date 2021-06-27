@@ -1,7 +1,11 @@
 <template>
   <div class="my-books">
     <h1>My Books</h1>
-    <List />
+    <List
+      v-if="books"
+      :books="books"
+      :show-functions="true"
+    />
     <AddBook />
   </div>
 </template>
@@ -16,6 +20,14 @@ export default {
   components: {
     AddBook,
     List,
+  },
+  data() {
+    return {
+      books: null,
+    };
+  },
+  async created() {
+    this.books = await this.$store.dispatch('getMyBooks');
   },
 };
 </script>
