@@ -21,6 +21,7 @@
 import firebase from 'firebase/app';
 import 'firebase/analytics';
 import 'firebase/auth';
+import '../node_modules/bulma/css/bulma.css';
 import Home from '@/views/Home.vue';
 
 export default {
