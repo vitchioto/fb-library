@@ -29,7 +29,7 @@ export default {
     const ids = [...friendIds, state.userData.uid];
     const books = [];
 
-    const querySnapshot = await db.collection('books').where('ownerFbId', 'in', ids).get();
+    const querySnapshot = await db.collection('books').where('ownerFbId', 'in', ids).orderBy('title').get();
     querySnapshot.forEach((doc) => {
       const record = doc.data();
       record.id = doc.id;
