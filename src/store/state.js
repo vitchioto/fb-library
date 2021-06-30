@@ -1,6 +1,6 @@
 export default {
   books: null,
-  friends: null,
+  friends: [],
   userData: null,
   userId: null,
   userToken: null,
