@@ -42,6 +42,11 @@
           @click="updateBook()"
           v-html="'Update'"
         />
+        <button
+          class="button is-danger"
+          @click="deleteBook()"
+          v-html="'Delete'"
+        />
       </div>
     </div>
     <button
@@ -77,6 +82,10 @@ export default {
   methods: {
     closeForm() {
       this.$emit('closeForm');
+    },
+    async deleteBook() {
+      await this.$store.dispatch('deleteBook', this.selectedBook.id);
+      this.closeForm();
     },
     async updateBook() {
       const book = {

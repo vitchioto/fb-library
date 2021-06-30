@@ -1,4 +1,9 @@
 export default {
+  DELETE_BOOK(state, bookId) {
+    const bookIndex = state.books.findIndex((item) => item.id === bookId);
+    console.log(bookIndex);
+    state.books.splice(bookIndex, 1);
+  },
   SET_BOOKS(state, payload) {
     state.books = payload;
   },

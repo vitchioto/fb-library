@@ -2,6 +2,13 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 export default {
+  async deleteBook({ commit }, bookId) {
+    const app = firebase.app();
+    const db = firebase.firestore(app);
+
+    await db.collection('books').doc(bookId).delete();
+    commit('DELETE_BOOK', bookId);
+  },
   async getAccessToken({ state }) {
     const app = firebase.app();
     const db = firebase.firestore(app);
