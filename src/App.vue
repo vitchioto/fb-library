@@ -8,11 +8,13 @@
     </div>
     <div
       v-if="!userId"
-      class="log-in-page"
+      class="log-out-page"
     >
-      <button @click="logIn()">
-        Log In
-      </button>
+      <button
+        class="button is-primary"
+        @click="logIn()"
+        v-html="'Log In'"
+      />
     </div>
   </div>
 </template>
@@ -97,5 +99,10 @@ export default {
 .app {
   margin: 0 auto;
   max-width: 1200px;
+  padding: 20px 10px;
+}
+
+.log-out-page {
+  text-align: center;
 }
 </style>
