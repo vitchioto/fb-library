@@ -51,7 +51,10 @@
         v-html="'Add book'"
       />
     </header>
-    <table class="table is-striped is-fullwidth">
+    <table
+      v-if="filteredBooks && filteredBooks.length"
+      class="table is-striped is-fullwidth"
+    >
       <thead>
         <tr>
           <th
@@ -126,6 +129,11 @@
         </tr>
       </tbody>
     </table>
+    <div
+      v-else
+      class="table-empty"
+      v-html="'No Books'"
+    />
   </div>
 </template>
 
@@ -148,6 +156,7 @@ export default {
       let { books } = this;
       if (this.filterType === '1') books = books.filter((book) => book.ownerFbId === this.userFbId);
       if (this.filterType === '2') books = books.filter((book) => book.renterFbId === this.userFbId);
+      if (this.filterType === '3') books = books.filter((book) => book.ownerFbId === this.userFbId && book.renterFbId);
       console.log(books);
       if (!this.filterString) return books;
       const filterStringInLower = this.filterString.toLowerCase();
