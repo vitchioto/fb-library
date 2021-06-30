@@ -36,67 +36,71 @@
       >
       Borrowed Books
     </label>
-    <div
-      class="list"
-    >
-      <div
-        class="list_label"
-        v-text="'Title'"
-      />
-      <div
-        class="list_label"
-        v-text="'Author'"
-      />
-      <div
-        class="list_label"
-        v-text="'Theme'"
-      />
-      <div
-        class="list_label"
-        v-text="'Language'"
-      />
-      <div
-        class="list_label"
-        v-text="'Owner'"
-      />
-      <div
-        class="list_label"
-        v-text="'Functions'"
-      />
-      <template
-        v-for="(book, index) in filteredBooks"
-        :key="index"
-      >
-        <div
-          class="book__title"
-          v-html="book.title"
-        />
-        <div
-          class="book__author"
-          v-html="book.author"
-        />
-        <div
-          class="book__theme"
-          v-html="book.theme"
-        />
-        <div
-          class="book__language"
-          v-html="book.language"
-        />
-        <div
-          class="book__owner"
-          v-html="book.displayName"
-        />
-        <div
-          class="book__functions"
-        >
-          <button
-            v-if="book.fbId === userFbId"
-            v-html="'upravit'"
+    <table class="table is-striped is-fullwidth">
+      <thead>
+        <tr>
+          <th
+            class="list_label"
+            v-text="'Title'"
           />
-        </div>
-      </template>
-    </div>
+          <th
+            class="list_label"
+            v-text="'Author'"
+          />
+          <th
+            class="list_label"
+            v-text="'Theme'"
+          />
+          <th
+            class="list_label"
+            v-text="'Language'"
+          />
+          <th
+            class="list_label"
+            v-text="'Owner'"
+          />
+          <th
+            class="list_label"
+            v-text="'Functions'"
+          />
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(book, index) in filteredBooks"
+          :key="index"
+        >
+          <td
+            class="book__title"
+            v-html="book.title"
+          />
+          <td
+            class="book__author"
+            v-html="book.author"
+          />
+          <td
+            class="book__theme"
+            v-html="book.theme"
+          />
+          <td
+            class="book__language"
+            v-html="book.language"
+          />
+          <td
+            class="book__owner"
+            v-html="book.displayName"
+          />
+          <td
+            class="book__functions"
+          >
+            <button
+              v-if="book.fbId === userFbId"
+              v-html="'upravit'"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -136,8 +140,5 @@ export default {
 </script>
 
 <style lang="scss">
-.list {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-}
+
 </style>
