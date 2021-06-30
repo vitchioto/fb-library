@@ -4,7 +4,14 @@
       v-if="books"
       :books="books"
     />
-    <AddBook />
+    <button
+      @click="toggleAddBookForm()"
+      v-html="'Add book'"
+    />
+    <AddBook
+      v-if="showAddBook"
+      @close-form="toggleAddBookForm()"
+    />
   </div>
 </template>
 
@@ -22,10 +29,16 @@ export default {
   data() {
     return {
       books: null,
+      showAddBook: false,
     };
   },
   async created() {
     this.books = await this.$store.dispatch('getBooks');
+  },
+  methods: {
+    toggleAddBookForm() {
+      this.showAddBook = !this.showAddBook;
+    },
   },
 };
 </script>

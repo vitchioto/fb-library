@@ -1,48 +1,62 @@
 <template>
-  <div>
-    <div
-      class="form"
-    >
-      <label>
-        ISBN
-        <input
-          type="text"
-          v-model="isbn"
-        >
-      </label>
-      <label>
-        Title
-        <input
-          type="text"
-          v-model="title"
-        >
-      </label>
-      <label>
-        Author
-        <input
-          type="text"
-          v-model="author"
-        >
-      </label>
-      <label>
-        Theme
-        <input
-          type="text"
-          v-model="theme"
-        >
-      </label>
-      <label>
-        Language
-        <input
-          type="text"
-          v-model="language"
-        >
-      </label>
-      <button
-        @click="submitBook()"
-        v-html="'Submit'"
-      />
+  <div class="modal is-active">
+    <div class="modal-background" />
+    <div class="modal-content">
+      <div
+        class="form"
+      >
+        <label class="label">
+          ISBN
+          <input
+            type="text"
+            class="input"
+            v-model="isbn"
+          >
+        </label>
+        <label class="label">
+          Title
+          <input
+            type="text"
+            class="input"
+            v-model="title"
+          >
+        </label>
+        <label class="label">
+          Author
+          <input
+            type="text"
+            class="input"
+            v-model="author"
+          >
+        </label>
+        <label class="label">
+          Theme
+          <input
+            type="text"
+            class="input"
+            v-model="theme"
+          >
+        </label>
+        <label class="label">
+          Language
+          <input
+            type="text"
+            class="input"
+            v-model="language"
+          >
+        </label>
+        <button
+          class="button is-primary"
+          @click="submitBook()"
+          v-html="'Submit'"
+        />
+      </div>
     </div>
+    <button
+      class="modal-close is-large"
+      aria-label="close"
+      @click="closeForm()"
+    />
   </div>
 </template>
 
@@ -58,6 +72,9 @@ export default {
     };
   },
   methods: {
+    closeForm() {
+      this.$emit('closeForm');
+    },
     submitBook() {
       const book = {
         author: this.author,
@@ -72,5 +89,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+.label {
+  color: #fff;
+}
 </style>
