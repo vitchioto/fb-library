@@ -47,10 +47,6 @@ export default {
       return this.books.find((book) => book.id === this.bookId);
     },
   },
-  created() {
-    this.$store.dispatch('getBooks');
-    console.log('aaa', this.books);
-  },
   methods: {
     toggleAddBookForm() {
       this.showAddBook = !this.showAddBook;

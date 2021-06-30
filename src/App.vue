@@ -7,7 +7,7 @@
       <Home />
     </div>
     <div
-      v-if="!userId"
+      v-if="!userId && loaded"
       class="log-out-page"
     >
       <button
@@ -63,12 +63,14 @@ export default {
   methods: {
     loadUser() {
       firebase.auth().onAuthStateChanged(async (user) => {
-        console.log('user', user);
-        this.$store.commit('SET_USER_ID', user.uid);
-        this.$store.commit('SET_USER_DATA', user.providerData[0]);
-        const userToken = await this.$store.dispatch('getAccessToken');
-        this.$store.commit('SET_USER_TOKEN', userToken);
-        await this.$store.dispatch('getFriends');
+        if (user) {
+          this.$store.commit('SET_USER_ID', user.uid);
+          this.$store.commit('SET_USER_DATA', user.providerData[0]);
+          const userToken = await this.$store.dispatch('getAccessToken');
+          this.$store.commit('SET_USER_TOKEN', userToken);
+          await this.$store.dispatch('getFriends');
+          this.$store.dispatch('getBooks');
+        }
         this.loaded = true;
       });
     },
@@ -84,7 +86,8 @@ export default {
 
           this.$store.commit('SET_USER_ID', userId);
           this.$store.dispatch('submitAccessToken', accessToken);
-          this.$store.dispatch('getFriends');
+          // this.$store.commit('SET_USER_TOKEN', accessToken);
+          // this.$store.dispatch('getFriends');
         })
         .catch((error) => {
           // Handle Errors here.

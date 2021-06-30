@@ -157,7 +157,6 @@ export default {
       if (this.filterType === '1') books = books.filter((book) => book.ownerFbId === this.userFbId);
       if (this.filterType === '2') books = books.filter((book) => book.renterFbId === this.userFbId);
       if (this.filterType === '3') books = books.filter((book) => book.ownerFbId === this.userFbId && book.renterFbId);
-      console.log(books);
       if (!this.filterString) return books;
       const filterStringInLower = this.filterString.toLowerCase();
       return books.filter((book) => book.title.toLowerCase().includes(filterStringInLower)

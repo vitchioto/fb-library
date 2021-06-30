@@ -19,6 +19,7 @@ export default {
       const record = doc.data();
       token = record.token;
     });
+
     return token;
   },
   async getBooks({ state, commit }) {
@@ -41,10 +42,12 @@ export default {
     const token = state.userToken;
     const response = await fetch(`https://graph.facebook.com/me/friends?limit=5000&access_token=${token}`);
     const data = await response.json();
+    if (!data.data || !data.data.length) return;
     const friends = data.data.map((item) => ({
       id: item.id,
       name: item.name,
     }));
+
     commit('SET_FRIENDS', friends);
   },
   submitAccessToken({ state }, payload) {
@@ -78,7 +81,6 @@ export default {
     const app = firebase.app();
     const db = firebase.firestore(app);
 
-    console.log(payload);
     await db.collection('books').doc(bookId).update({
       author: payload.author,
       language: payload.language,

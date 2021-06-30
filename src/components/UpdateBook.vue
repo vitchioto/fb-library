@@ -113,7 +113,6 @@ export default {
     async updateBook() {
       let renterFbId = '';
       let renterName = '';
-      console.log('friends', this.friends);
       if (this.renterFbId) {
         const renter = this.friends.find((item) => item.id === this.renterFbId);
         renterFbId = renter.id;
