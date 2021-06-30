@@ -53,16 +53,18 @@
             v-model="language"
           >
         </label>
-        <button
-          class="button is-primary"
-          @click="updateBook()"
-          v-html="'Update'"
-        />
-        <button
-          class="button is-danger"
-          @click="deleteBook()"
-          v-html="'Delete'"
-        />
+        <div class="buttons">
+          <button
+            class="button is-primary"
+            @click="updateBook()"
+            v-html="'Update'"
+          />
+          <button
+            class="button is-danger"
+            @click="deleteBook()"
+            v-html="'Delete'"
+          />
+        </div>
       </div>
     </div>
     <button
