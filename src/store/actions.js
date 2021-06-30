@@ -14,7 +14,7 @@ export default {
     });
     return token;
   },
-  async getBooks({ state }) {
+  async getBooks({ state, commit }) {
     const app = firebase.app();
     const db = firebase.firestore(app);
     const ids = [...state.friendIds, state.userData.uid];
@@ -23,9 +23,10 @@ export default {
     const querySnapshot = await db.collection('books').where('fbId', 'in', ids).get();
     querySnapshot.forEach((doc) => {
       const record = doc.data();
+      record.id = doc.id;
       books.push(record);
     });
-    console.log('books', books);
+    commit('SET_BOOKS', books);
     return books;
   },
   async getFriends({ state, commit }) {
@@ -58,5 +59,18 @@ export default {
       uid: state.userId,
       ...payload,
     });
+  },
+  async updateBook({ commit }, [payload, bookId]) {
+    const app = firebase.app();
+    const db = firebase.firestore(app);
+
+    console.log(payload);
+    await db.collection('books').doc(bookId).update({
+      author: payload.author,
+      language: payload.language,
+      theme: payload.theme,
+      title: payload.title,
+    });
+    commit('UPDATE_BOOK', [payload, bookId]);
   },
 };

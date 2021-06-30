@@ -47,7 +47,7 @@
       </div>
       <button
         class="button is-primary"
-        @click="openForm()"
+        @click="openAddForm()"
         v-html="'Add book'"
       />
     </header>
@@ -111,6 +111,7 @@
             <button
               v-if="book.fbId === userFbId"
               class="button is-primary is-light is-small"
+              @click="openUpdateForm(book.id)"
               v-html="'upravit'"
             />
           </td>
@@ -153,8 +154,11 @@ export default {
     },
   },
   methods: {
-    openForm() {
-      this.$emit('openForm');
+    openAddForm() {
+      this.$emit('openAddForm');
+    },
+    openUpdateForm(id) {
+      this.$emit('openUpdateForm', id);
     },
   },
 };
