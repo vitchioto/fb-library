@@ -4,6 +4,38 @@
       type="text"
       v-model="filterString"
     >
+    <label>
+      <input
+        type="radio"
+        value="0"
+        v-model="filterType"
+      >
+      All Books
+    </label>
+    <label>
+      <input
+        type="radio"
+        value="1"
+        v-model="filterType"
+      >
+      My Books
+    </label>
+    <label>
+      <input
+        type="radio"
+        value="2"
+        v-model="filterType"
+      >
+      My Rented Books
+    </label>
+    <label>
+      <input
+        type="radio"
+        value="3"
+        v-model="filterType"
+      >
+      Borrowed Books
+    </label>
     <div
       class="list"
     >
@@ -56,13 +88,12 @@
           v-html="book.displayName"
         />
         <div
-          v-if="true"
           class="book__functions"
         >
-          <button>b</button>
-          <button>r</button>
-          <button>e</button>
-          <button>d</button>
+          <button
+            v-if="book.fbId === userFbId"
+            v-html="'upravit'"
+          />
         </div>
       </template>
     </div>
@@ -80,16 +111,25 @@ export default {
   data() {
     return {
       filterString: null,
+      filterType: '0',
     };
   },
   computed: {
     filteredBooks() {
-      if (!this.filterString) return this.books;
+      let { books } = this;
+      if (this.filterType === '1') books = books.filter((book) => book.fbId === this.userFbId);
+      if (this.filterType === '2') books = books.filter((book) => book.renterId === this.userFbId);
+      console.log(books);
+      if (!this.filterString) return books;
       const filterStringInLower = this.filterString.toLowerCase();
-      return this.books.filter((book) => book.title.toLowerCase().includes(filterStringInLower)
+      return books.filter((book) => book.title.toLowerCase().includes(filterStringInLower)
         || book.author.toLowerCase().includes(filterStringInLower)
         || book.theme.toLowerCase().includes(filterStringInLower)
-        || book.language.toLowerCase().includes(filterStringInLower));
+        || book.language.toLowerCase().includes(filterStringInLower)
+        || book.displayName.toLowerCase().includes(filterStringInLower));
+    },
+    userFbId() {
+      return this.$store.state.userData.uid;
     },
   },
 };

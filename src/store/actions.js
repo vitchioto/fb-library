@@ -35,20 +35,6 @@ export default {
     const friendIds = data.data.map((item) => item.id);
     commit('SET_FRIEND_IDS', friendIds);
   },
-  async getMyBooks({ state }) {
-    const app = firebase.app();
-    const db = firebase.firestore(app);
-    const fbId = state.userData.uid;
-    const books = [];
-
-    const querySnapshot = await db.collection('books').where('fbId', '==', fbId).get();
-    querySnapshot.forEach((doc) => {
-      const record = doc.data();
-      books.push(record);
-    });
-    console.log('books', books);
-    return books;
-  },
   submitAccessToken({ state }, payload) {
     // eslint-disable-next-line no-unused-vars
     return new Promise((resolve, reject) => {
