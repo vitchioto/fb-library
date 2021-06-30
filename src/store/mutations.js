@@ -10,8 +10,8 @@ export default {
   SET_BOOKS(state, payload) {
     state.books = payload;
   },
-  SET_FRIEND_IDS(state, payload) {
-    state.friendIds = payload;
+  SET_FRIENDS(state, payload) {
+    state.friends = payload;
   },
   SET_USER_DATA(state, payload) {
     state.userData = payload;
@@ -26,6 +26,8 @@ export default {
     const book = state.books.find((item) => item.id === bookId);
     book.author = payload.author;
     book.language = payload.language;
+    book.renterFbId = payload.renterFbId;
+    book.renterName = payload.renterName;
     book.theme = payload.theme;
     book.title = payload.title;
   },

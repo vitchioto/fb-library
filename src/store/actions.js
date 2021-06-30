@@ -24,7 +24,8 @@ export default {
   async getBooks({ state, commit }) {
     const app = firebase.app();
     const db = firebase.firestore(app);
-    const ids = [...state.friendIds, state.userData.uid];
+    const friendIds = state.friends.map((item) => item.id);
+    const ids = [...friendIds, state.userData.uid];
     const books = [];
 
     const querySnapshot = await db.collection('books').where('ownerFbId', 'in', ids).get();
@@ -40,8 +41,11 @@ export default {
     const token = state.userToken;
     const response = await fetch(`https://graph.facebook.com/me/friends?limit=5000&access_token=${token}`);
     const data = await response.json();
-    const friendIds = data.data.map((item) => item.id);
-    commit('SET_FRIEND_IDS', friendIds);
+    const friends = data.data.map((item) => ({
+      id: item.id,
+      name: item.name,
+    }));
+    commit('SET_FRIENDS', friends);
   },
   submitAccessToken({ state }, payload) {
     // eslint-disable-next-line no-unused-vars
@@ -78,6 +82,8 @@ export default {
     await db.collection('books').doc(bookId).update({
       author: payload.author,
       language: payload.language,
+      renterFbId: payload.renterFbId,
+      renterName: payload.renterName,
       theme: payload.theme,
       title: payload.title,
     });

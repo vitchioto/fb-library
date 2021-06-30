@@ -76,6 +76,10 @@
           />
           <th
             class="list_label"
+            v-text="'Rented by'"
+          />
+          <th
+            class="list_label"
             v-text="'Functions'"
           />
         </tr>
@@ -104,6 +108,10 @@
           <td
             class="book__owner"
             v-html="book.ownerName"
+          />
+          <td
+            class="book__owner"
+            v-html="book.renterName"
           />
           <td
             class="book__functions"

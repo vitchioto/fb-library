@@ -5,6 +5,22 @@
       <div
         class="form"
       >
+        <div class="select">
+          <select
+            v-model="renterFbId"
+          >
+            <option
+              value=""
+              v-html="'Nobody'"
+            />
+            <option
+              v-for="friend in friends"
+              :key="friend.id"
+              :value="friend.id"
+              v-html="friend.name"
+            />
+          </select>
+        </div>
         <label class="label">
           Title
           <input
@@ -69,13 +85,20 @@ export default {
     return {
       author: '',
       language: '',
+      renterFbId: '',
       theme: '',
       title: '',
     };
   },
+  computed: {
+    friends() {
+      return this.$store.state.friends;
+    },
+  },
   mounted() {
     this.author = this.selectedBook.author;
     this.language = this.selectedBook.language;
+    this.renterFbId = this.selectedBook.renterFbId;
     this.theme = this.selectedBook.theme;
     this.title = this.selectedBook.title;
   },
@@ -88,9 +111,19 @@ export default {
       this.closeForm();
     },
     async updateBook() {
+      let renterFbId = '';
+      let renterName = '';
+      console.log('friends', this.friends);
+      if (this.renterFbId) {
+        const renter = this.friends.find((item) => item.id === this.renterFbId);
+        renterFbId = renter.id;
+        renterName = renter.name;
+      }
       const book = {
         author: this.author,
         language: this.language,
+        renterFbId,
+        renterName,
         theme: this.theme,
         title: this.title,
       };
