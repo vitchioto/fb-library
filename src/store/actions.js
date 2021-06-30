@@ -74,7 +74,8 @@ export default {
       uid: state.userId,
       ...payload,
     };
-    await db.collection('books').add(newBook);
+    const bookEntry = await db.collection('books').add(newBook);
+    newBook.id = bookEntry.id;
     commit('ADD_BOOK', newBook);
   },
   async updateBook({ commit }, [payload, bookId]) {
