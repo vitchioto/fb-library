@@ -3,10 +3,7 @@
     <List
       v-if="books"
       :books="books"
-    />
-    <button
-      @click="toggleAddBookForm()"
-      v-html="'Add book'"
+      @open-form="toggleAddBookForm()"
     />
     <AddBook
       v-if="showAddBook"

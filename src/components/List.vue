@@ -1,41 +1,56 @@
 <template>
-  <div class="table">
-    <input
-      type="text"
-      v-model="filterString"
-    >
-    <label>
-      <input
-        type="radio"
-        value="0"
-        v-model="filterType"
-      >
-      All Books
-    </label>
-    <label>
-      <input
-        type="radio"
-        value="1"
-        v-model="filterType"
-      >
-      My Books
-    </label>
-    <label>
-      <input
-        type="radio"
-        value="2"
-        v-model="filterType"
-      >
-      My Rented Books
-    </label>
-    <label>
-      <input
-        type="radio"
-        value="3"
-        v-model="filterType"
-      >
-      Borrowed Books
-    </label>
+  <div class="list">
+    <header class="list-header">
+      <div class="control has-icons-right">
+        <input
+          class="input"
+          type="text"
+          v-model="filterString"
+        >
+        <span class="icon is-small is-right">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <div class="list-filters">
+        <label class="radio">
+          <input
+            type="radio"
+            value="0"
+            v-model="filterType"
+          >
+          All Books
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            value="1"
+            v-model="filterType"
+          >
+          My Books
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            value="2"
+            v-model="filterType"
+          >
+          My Rented Books
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            value="3"
+            v-model="filterType"
+          >
+          Borrowed Books
+        </label>
+      </div>
+      <button
+        class="button is-primary"
+        @click="openForm()"
+        v-html="'Add book'"
+      />
+    </header>
     <table class="table is-striped is-fullwidth">
       <thead>
         <tr>
@@ -95,6 +110,7 @@
           >
             <button
               v-if="book.fbId === userFbId"
+              class="button is-primary is-light is-small"
               v-html="'upravit'"
             />
           </td>
@@ -136,9 +152,20 @@ export default {
       return this.$store.state.userData.uid;
     },
   },
+  methods: {
+    openForm() {
+      this.$emit('openForm');
+    },
+  },
 };
 </script>
 
 <style lang="scss">
-
+.list {
+  &-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+}
 </style>
