@@ -103,13 +103,13 @@
           />
           <td
             class="book__owner"
-            v-html="book.displayName"
+            v-html="book.ownerName"
           />
           <td
             class="book__functions"
           >
             <button
-              v-if="book.fbId === userFbId"
+              v-if="book.ownerFbId === userFbId"
               class="button is-primary is-light is-small"
               @click="openUpdateForm(book.id)"
               v-html="'upravit'"
@@ -138,8 +138,8 @@ export default {
   computed: {
     filteredBooks() {
       let { books } = this;
-      if (this.filterType === '1') books = books.filter((book) => book.fbId === this.userFbId);
-      if (this.filterType === '2') books = books.filter((book) => book.renterId === this.userFbId);
+      if (this.filterType === '1') books = books.filter((book) => book.ownerFbId === this.userFbId);
+      if (this.filterType === '2') books = books.filter((book) => book.renterFbId === this.userFbId);
       console.log(books);
       if (!this.filterString) return books;
       const filterStringInLower = this.filterString.toLowerCase();
@@ -147,7 +147,7 @@ export default {
         || book.author.toLowerCase().includes(filterStringInLower)
         || book.theme.toLowerCase().includes(filterStringInLower)
         || book.language.toLowerCase().includes(filterStringInLower)
-        || book.displayName.toLowerCase().includes(filterStringInLower));
+        || book.ownerName.toLowerCase().includes(filterStringInLower));
     },
     userFbId() {
       return this.$store.state.userData.uid;

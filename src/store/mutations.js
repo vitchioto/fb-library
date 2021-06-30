@@ -1,4 +1,7 @@
 export default {
+  ADD_BOOK(state, payload) {
+    state.books.push(payload);
+  },
   DELETE_BOOK(state, bookId) {
     const bookIndex = state.books.findIndex((item) => item.id === bookId);
     console.log(bookIndex);

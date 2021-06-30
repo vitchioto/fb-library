@@ -75,14 +75,15 @@ export default {
     closeForm() {
       this.$emit('closeForm');
     },
-    submitBook() {
+    async submitBook() {
       const book = {
         author: this.author,
         language: this.language,
         theme: this.theme,
         title: this.title,
       };
-      this.$store.dispatch('submitBook', book);
+      await this.$store.dispatch('submitBook', book);
+      this.closeForm();
     },
   },
 };

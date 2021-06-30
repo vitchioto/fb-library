@@ -27,7 +27,7 @@ export default {
     const ids = [...state.friendIds, state.userData.uid];
     const books = [];
 
-    const querySnapshot = await db.collection('books').where('fbId', 'in', ids).get();
+    const querySnapshot = await db.collection('books').where('ownerFbId', 'in', ids).get();
     querySnapshot.forEach((doc) => {
       const record = doc.data();
       record.id = doc.id;
@@ -55,17 +55,20 @@ export default {
       });
     });
   },
-  async submitBook({ state }, payload) {
+  async submitBook({ state, commit }, payload) {
     const app = firebase.app();
     const db = firebase.firestore(app);
 
-    console.log(payload);
-    await db.collection('books').add({
-      displayName: state.userData.displayName,
-      fbId: state.userData.uid,
+    const newBook = {
+      ownerName: state.userData.displayName,
+      ownerFbId: state.userData.uid,
+      renterFbId: '',
+      renterName: '',
       uid: state.userId,
       ...payload,
-    });
+    };
+    await db.collection('books').add(newBook);
+    commit('ADD_BOOK', newBook);
   },
   async updateBook({ commit }, [payload, bookId]) {
     const app = firebase.app();
