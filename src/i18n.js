@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { createI18n } from 'vue-i18n';
 
-export const SUPPORT_LOCALES = ['sk'];
+export const SUPPORT_LOCALES = ['sk', 'en'];
 
 export function setI18nLanguage(i18n, locale) {
   if (i18n.mode === 'legacy') {
