@@ -225,7 +225,7 @@ export default {
   margin-bottom: 10px;
   padding: 10px;
 
-  &-top{
+  &-top {
     display: grid;
     grid-template-columns: auto 30px;
   }
