@@ -9,17 +9,8 @@ export default {
     await db.collection('books').doc(bookId).delete();
     commit('DELETE_BOOK', bookId);
   },
-  async getAccessToken({ state }) {
-    const app = firebase.app();
-    const db = firebase.firestore(app);
-    let token;
-
-    const querySnapshot = await db.collection('fbAccessTokens').where('uid', '==', state.userId).get();
-    querySnapshot.forEach((doc) => {
-      const record = doc.data();
-      token = record.token;
-    });
-
+  getAccessToken() {
+    const token = sessionStorage.getItem('vv_fb_library');
     return token;
   },
   async getBooks({ state, commit }) {
@@ -50,17 +41,8 @@ export default {
 
     commit('SET_FRIENDS', friends);
   },
-  submitAccessToken({ state }, payload) {
-    // eslint-disable-next-line no-unused-vars
-    return new Promise((resolve, reject) => {
-      const app = firebase.app();
-      const db = firebase.firestore(app);
-
-      db.collection('fbAccessTokens').add({
-        uid: state.userId,
-        token: payload,
-      });
-    });
+  submitAccessToken(_, payload) {
+    sessionStorage.setItem('vv_fb_library', payload);
   },
   async submitBook({ state, commit }, payload) {
     const app = firebase.app();
