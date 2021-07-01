@@ -10,7 +10,7 @@ export default {
     commit('DELETE_BOOK', bookId);
   },
   getAccessToken() {
-    const token = sessionStorage.getItem('vv_fb_library');
+    const token = localStorage.getItem('vv_fb_library');
     return token;
   },
   async getBooks({ state, commit }) {
@@ -42,7 +42,7 @@ export default {
     commit('SET_FRIENDS', friends);
   },
   submitAccessToken(_, payload) {
-    sessionStorage.setItem('vv_fb_library', payload);
+    localStorage.setItem('vv_fb_library', payload);
   },
   async submitBook({ state, commit }, payload) {
     const app = firebase.app();
