@@ -6,49 +6,54 @@
         class="form"
       >
         <label class="label">
-          ISBN
+          {{ $t('isbn') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderIsbn')"
             v-model="isbn"
           >
         </label>
         <label class="label">
-          Title
+          {{ $t('title') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderTitle')"
             v-model="title"
           >
         </label>
         <label class="label">
-          Author
+          {{ $t('author') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderAuthor')"
             v-model="author"
           >
         </label>
         <label class="label">
-          Theme
+          {{ $t('theme') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderTheme')"
             v-model="theme"
           >
         </label>
         <label class="label">
-          Language
+          {{ $t('language') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderLanguage')"
             v-model="language"
           >
         </label>
         <button
           class="button is-primary"
           @click="submitBook()"
-          v-html="'Submit'"
+          v-html="$t('submit')"
         />
       </div>
     </div>

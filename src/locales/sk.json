@@ -1,3 +1,27 @@
 {
-    "author": "Autor"
+    "addABook": "Pridať knihu",
+    "author": "Autor",
+    "delete": "Zmazať",
+    "edit": "Upraviť",
+    "filterAllBooks": "Všetky knihy",
+    "filterMyBooks": "Moje knihy",
+    "filterMyBorrowedBooks": "Požičané mne",
+    "filterMyRentedBooks": "Požičané mnou",
+    "functions": "Akcia",
+    "isbn": "ISBN",
+    "language": "Jazyk",
+    "logInButton": "Prihlásiť sa",
+    "noBoooks": "Žiadne knihy",
+    "nobody": "Nikto",
+    "owner": "Vlasník",
+    "placeholderAuthor": "Oscar Wilde",
+    "placeholderIsbn": "1234567890123",
+    "placeholderLanguage": "sk",
+    "placeholderSearch": "Oscar Wilde",
+    "placeholderTheme": "historický",
+    "placeholderTitle": "Portrét Doriana Graya",
+    "rentedBy": "Požičal",
+    "submit": "Odoslať",
+    "theme": "Žáner",
+    "title": "Názov"
 }

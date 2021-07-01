@@ -13,7 +13,7 @@
       <button
         class="button is-primary"
         @click="logIn()"
-        v-html="'Log In'"
+        v-html="$t('logInButton')"
       />
     </div>
   </div>

@@ -11,7 +11,7 @@
           >
             <option
               value=""
-              v-html="'Nobody'"
+              v-html="$t('nobody')"
             />
             <option
               v-for="friend in friends"
@@ -22,34 +22,38 @@
           </select>
         </div>
         <label class="label">
-          Title
+          {{ $t('title') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderTitle')"
             v-model="title"
           >
         </label>
         <label class="label">
-          Author
+          {{ $t('author') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderAuthor')"
             v-model="author"
           >
         </label>
         <label class="label">
-          Theme
+          {{ $t('theme') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderTheme')"
             v-model="theme"
           >
         </label>
         <label class="label">
-          Language
+          {{ $t('language') }}
           <input
             type="text"
             class="input"
+            :placeholder="$t('placeholderLanguage')"
             v-model="language"
           >
         </label>
@@ -57,12 +61,12 @@
           <button
             class="button is-primary"
             @click="updateBook()"
-            v-html="'Update'"
+            v-html="$t('edit')"
           />
           <button
             class="button is-danger"
             @click="deleteBook()"
-            v-html="'Delete'"
+            v-html="$t('delete')"
           />
         </div>
       </div>

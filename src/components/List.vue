@@ -5,6 +5,7 @@
         <input
           class="input"
           type="text"
+          :placeholder="$t('placeholderSearch')"
           v-model="filterString"
         >
         <span class="icon is-small is-right">
@@ -18,7 +19,7 @@
             value="0"
             v-model="filterType"
           >
-          All Books
+          {{ $t('filterAllBooks') }}
         </label>
         <label class="radio">
           <input
@@ -26,7 +27,7 @@
             value="1"
             v-model="filterType"
           >
-          My Books
+          {{ $t('filterMyBooks') }}
         </label>
         <label class="radio">
           <input
@@ -34,7 +35,7 @@
             value="2"
             v-model="filterType"
           >
-          My Rented Books
+          {{ $t('filterMyRentedBooks') }}
         </label>
         <label class="radio">
           <input
@@ -42,13 +43,13 @@
             value="3"
             v-model="filterType"
           >
-          Borrowed Books
+          {{ $t('filterMyBorrowedBooks') }}
         </label>
       </div>
       <button
         class="button is-primary"
         @click="openAddForm()"
-        v-html="'Add book'"
+        v-html="$t('addABook')"
       />
     </header>
     <div
@@ -57,7 +58,7 @@
     >
       <div
         class="list-label"
-        v-text="'Title'"
+        v-text="$t('title')"
       />
       <div
         class="list-label"
@@ -65,23 +66,23 @@
       />
       <div
         class="list-label"
-        v-text="'Theme'"
+        v-text="$t('theme')"
       />
       <div
         class="list-label"
-        v-text="'Language'"
+        v-text="$t('language')"
       />
       <div
         class="list-label"
-        v-text="'Owner'"
+        v-text="$t('owner')"
       />
       <div
         class="list-label"
-        v-text="'Rented by'"
+        v-text="$t('rentedBy')"
       />
       <div
         class="list-label"
-        v-text="'Functions'"
+        v-text="$t('functions')"
       />
       <div
         v-for="(book, index) in filteredBooks"
@@ -111,22 +112,22 @@
         >
           <div
             class="book-theme"
-            data-label="Theme: "
+            :data-label="`${$t('theme')}: `"
             v-html="book.theme"
           />
           <div
             class="book-language"
-            data-label="Lang: "
+            :data-label="`${$t('language')}: `"
             v-html="book.language"
           />
           <div
             class="book-owner"
-            data-label="Owner: "
+            :data-label="`${$t('owner')}: `"
             v-html="book.ownerName"
           />
           <div
             class="book-renter"
-            data-label="Renter: "
+            :data-label="`${$t('rentedBy')}: `"
             v-html="book.renterName"
           />
           <div
@@ -136,7 +137,7 @@
               v-if="book.ownerFbId === userFbId"
               class="button is-primary is-light is-small"
               @click="openUpdateForm(book.id)"
-              v-html="'upravit'"
+              v-html="$t('edit')"
             />
           </div>
         </div>
@@ -145,7 +146,7 @@
     <div
       v-else
       class="table-empty"
-      v-html="'No Books'"
+      v-html="$t('noBoooks')"
     />
   </div>
 </template>
