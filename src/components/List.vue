@@ -51,73 +51,86 @@
         v-html="'Add book'"
       />
     </header>
-    <table
+    <div
       v-if="filteredBooks && filteredBooks.length"
-      class="table is-striped is-fullwidth"
+      class="list-table"
     >
-      <thead>
-        <tr>
-          <th
-            class="list_label"
-            v-text="'Title'"
-          />
-          <th
-            class="list_label"
-            v-text="'Author'"
-          />
-          <th
-            class="list_label"
-            v-text="'Theme'"
-          />
-          <th
-            class="list_label"
-            v-text="'Language'"
-          />
-          <th
-            class="list_label"
-            v-text="'Owner'"
-          />
-          <th
-            class="list_label"
-            v-text="'Rented by'"
-          />
-          <th
-            class="list_label"
-            v-text="'Functions'"
-          />
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(book, index) in filteredBooks"
-          :key="index"
-        >
-          <td
-            class="book__title"
+      <div
+        class="list-label"
+        v-text="'Title'"
+      />
+      <div
+        class="list-label"
+        v-text="'Author'"
+      />
+      <div
+        class="list-label"
+        v-text="'Theme'"
+      />
+      <div
+        class="list-label"
+        v-text="'Language'"
+      />
+      <div
+        class="list-label"
+        v-text="'Owner'"
+      />
+      <div
+        class="list-label"
+        v-text="'Rented by'"
+      />
+      <div
+        class="list-label"
+        v-text="'Functions'"
+      />
+      <div
+        v-for="(book, index) in filteredBooks"
+        :key="index"
+        class="book"
+        @click="toggleBookDetails(index)"
+      >
+        <div class="book-top">
+          <div
+            class="book-title"
             v-html="book.title"
           />
-          <td
-            class="book__author"
+          <div
+            class="book-author"
             v-html="book.author"
           />
-          <td
-            class="book__theme"
+          <div class="book-icon icon is-small is-right">
+            <i
+              class="fas fa-chevron-down"
+              :class="{'book-icon--rotate': openDetails.includes(index)}"
+            />
+          </div>
+        </div>
+        <div
+          class="book-details"
+          :class="{'book-details--open': openDetails.includes(index)}"
+        >
+          <div
+            class="book-theme"
+            data-label="Theme: "
             v-html="book.theme"
           />
-          <td
-            class="book__language"
+          <div
+            class="book-language"
+            data-label="Lang: "
             v-html="book.language"
           />
-          <td
-            class="book__owner"
+          <div
+            class="book-owner"
+            data-label="Owner: "
             v-html="book.ownerName"
           />
-          <td
-            class="book__owner"
+          <div
+            class="book-renter"
+            data-label="Renter: "
             v-html="book.renterName"
           />
-          <td
-            class="book__functions"
+          <div
+            class="book-functions"
           >
             <button
               v-if="book.ownerFbId === userFbId"
@@ -125,10 +138,10 @@
               @click="openUpdateForm(book.id)"
               v-html="'upravit'"
             />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       v-else
       class="table-empty"
@@ -149,6 +162,7 @@ export default {
     return {
       filterString: null,
       filterType: '0',
+      openDetails: [],
     };
   },
   computed: {
@@ -173,6 +187,14 @@ export default {
     openAddForm() {
       this.$emit('openAddForm');
     },
+    toggleBookDetails(id) {
+      const index = this.openDetails.findIndex((item) => item === id);
+      if (index === -1) {
+        this.openDetails.push(id);
+      } else {
+        this.openDetails.splice(index, 1);
+      }
+    },
     openUpdateForm(id) {
       this.$emit('openUpdateForm', id);
     },
@@ -182,10 +204,128 @@ export default {
 
 <style lang="scss">
 .list {
-  &-header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
+  &-filters {
+    .radio {
+      margin: 0 5px 0 0;
+    }
+  }
+
+  &-label {
+    display: none;
+  }
+
+  &-table {
+    padding: 20px 0;
+  }
+}
+
+.book {
+  border: 1px solid #efefef;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+
+  &-top{
+    display: grid;
+    grid-template-columns: auto 30px;
+  }
+
+  &-author {
+    order: 2;
+  }
+
+  &-icon {
+    transform: rotateZ(0);
+
+    &--rotate {
+      transform: rotateZ(180deg);
+      transition: transform .5s;
+    }
+  }
+
+  &-details {
+    display: none;
+
+    &--open {
+      display: block;
+    }
+  }
+
+  &-theme, &-language, &-owner, &-renter {
+    &::before {
+      content: attr(data-label);
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .book {
+    display: contents;
+
+    &-top {
+      display: contents;
+    }
+
+    &-title {
+      align-items: center;
+      border-bottom: 1px solid #333;
+      display: flex;
+      padding: 10px;
+    }
+
+    &-author {
+      align-items: center;
+      border-bottom: 1px solid #333;
+      display: flex;
+      order: unset;
+      padding: 10px;
+    }
+
+    &-icon {
+      display: none;
+    }
+
+    &-details {
+      display: contents;
+    }
+
+    &-theme, &-language, &-owner, &-renter {
+      align-items: center;
+      border-bottom: 1px solid #333;
+      display: flex;
+      padding: 10px;
+
+      &::before {
+        content: unset;
+      }
+    }
+
+    &-functions {
+      align-items: center;
+      border-bottom: 1px solid #333;
+      display: flex;
+      padding: 10px;
+    }
+  }
+  .list {
+    &-header {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-label {
+      border-bottom: 1px solid #333;
+      display: block;
+      font-weight: 700;
+      padding: 10px;
+    }
+
+    &-table {
+      display: grid;
+      grid-template-columns: auto auto max-content max-content auto auto max-content;
+      padding: 30px 0;
+    }
   }
 }
 </style>
