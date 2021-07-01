@@ -145,7 +145,7 @@
     </div>
     <div
       v-else
-      class="table-empty"
+      class="list-empty"
       v-html="$t('noBoooks')"
     />
   </div>
@@ -216,6 +216,10 @@ export default {
   }
 
   &-table {
+    padding: 20px 0;
+  }
+
+  &-empty {
     padding: 20px 0;
   }
 }
@@ -308,6 +312,7 @@ export default {
       padding: 10px;
     }
   }
+
   .list {
     &-header {
       align-items: center;
@@ -325,6 +330,10 @@ export default {
     &-table {
       display: grid;
       grid-template-columns: auto auto max-content max-content auto auto max-content;
+      padding: 30px 0;
+    }
+
+    &-empty {
       padding: 30px 0;
     }
   }
