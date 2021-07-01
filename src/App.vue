@@ -43,7 +43,6 @@ export default {
     },
   },
   created() {
-    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: 'AIzaSyDdXezs1XBtANM9KDPjZ794ciGVud1spBY',
       authDomain: 'vv-library.firebaseapp.com',
@@ -53,7 +52,7 @@ export default {
       appId: '1:936690418524:web:2a5b1554b9a9245a153799',
       measurementId: 'G-KG8R6NNTYR',
     };
-      // Initialize Firebase
+
     firebase.initializeApp(firebaseConfig);
     firebase.analytics();
     this.firebaseObject = firebase;
@@ -86,11 +85,8 @@ export default {
 
           this.$store.commit('SET_USER_ID', userId);
           this.$store.dispatch('submitAccessToken', accessToken);
-          // this.$store.commit('SET_USER_TOKEN', accessToken);
-          // this.$store.dispatch('getFriends');
         })
         .catch((error) => {
-          // Handle Errors here.
           console.error('error', error);
         });
     },
