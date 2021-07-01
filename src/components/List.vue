@@ -61,7 +61,7 @@
       />
       <div
         class="list-label"
-        v-text="'Author'"
+        v-text="$t('author')"
       />
       <div
         class="list-label"
