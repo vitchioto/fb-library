@@ -4,7 +4,7 @@
       v-if="userId && loaded"
       class="library"
     >
-      <Home />
+      <router-view />
     </div>
     <div
       v-if="!userId && loaded"
@@ -25,7 +25,6 @@ import 'firebase/analytics';
 import 'firebase/auth';
 import '../node_modules/bulma/css/bulma.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
-import Home from '@/views/Home.vue';
 
 export default {
   data() {
@@ -33,9 +32,6 @@ export default {
       firebaseObject: null,
       loaded: false,
     };
-  },
-  components: {
-    Home,
   },
   computed: {
     userId() {
