@@ -3,6 +3,8 @@
     "author": "Author",
     "delete": "Remove",
     "edit": "Update",
+    "errorMaxLength": "Thi field can have up to 100 characters.",
+    "errorRequired": "This field is required.",
     "filterAllBooks": "All books",
     "filterMyBooks": "My books",
     "filterMyBorrowedBooks": "Borrowed books",

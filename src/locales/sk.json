@@ -3,6 +3,8 @@
     "author": "Autor",
     "delete": "Zmazať",
     "edit": "Upraviť",
+    "errorMaxLength": "Pole môže mať maximálne 100 znakov.",
+    "errorRequired": "Toto pole je povinné.",
     "filterAllBooks": "Všetky knihy",
     "filterMyBooks": "Moje knihy",
     "filterMyBorrowedBooks": "Požičané mne",
