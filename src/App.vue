@@ -98,9 +98,21 @@ export default {
 </script>
 
 <style lang="scss">
-$primary: #1877F2;
+$primary: #1877f2;
 
-@import '../node_modules/bulma/css/bulma.css';
+@import '../node_modules/bulma/sass/utilities/initial-variables.sass';
+@import '../node_modules/bulma/sass/utilities/derived-variables.sass';
+@import '../node_modules/bulma/sass/utilities/controls.sass';
+@import '../node_modules/bulma/sass/utilities/extends.sass';
+@import '../node_modules/bulma/sass/elements/button.sass';
+@import '../node_modules/bulma/sass/elements/icon.sass';
+@import '../node_modules/bulma/sass/form/shared.sass';
+@import '../node_modules/bulma/sass/form/select.sass';
+@import '../node_modules/bulma/sass/form/input-textarea.sass';
+@import '../node_modules/bulma/sass/form/checkbox-radio.sass';
+@import '../node_modules/bulma/sass/form/tools.sass';
+@import '../node_modules/bulma/sass/base/minireset.sass';
+@import '../node_modules/bulma/sass/base/generic.sass';
 
 @font-face {
   font-family: 'OpenSans';
