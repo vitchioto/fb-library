@@ -106,6 +106,7 @@ $primary: #1877f2;
 @import '../node_modules/bulma/sass/utilities/extends.sass';
 @import '../node_modules/bulma/sass/elements/button.sass';
 @import '../node_modules/bulma/sass/elements/icon.sass';
+@import '../node_modules/bulma/sass/components/modal.sass';
 @import '../node_modules/bulma/sass/form/shared.sass';
 @import '../node_modules/bulma/sass/form/select.sass';
 @import '../node_modules/bulma/sass/form/input-textarea.sass';
