@@ -53,6 +53,11 @@
       />
     </header>
     <div
+      v-if="!friends.length"
+      class="list-info"
+      v-html="$t('noFriendsMessage')"
+    />
+    <div
       v-if="filteredBooks && filteredBooks.length"
       class="list-table"
     >
@@ -180,6 +185,9 @@ export default {
         || book.language.toLowerCase().includes(filterStringInLower)
         || book.ownerName.toLowerCase().includes(filterStringInLower));
     },
+    friends() {
+      return this.$store.state.friends;
+    },
     userFbId() {
       return this.$store.state.userData.uid;
     },
@@ -215,8 +223,17 @@ export default {
     display: none;
   }
 
+  &-header {
+    padding-bottom: 20px;
+  }
+
+  &-info {
+    font-size: 14px;
+    padding-bottom: 20px;
+  }
+
   &-table {
-    padding: 20px 0;
+    padding-bottom: 20px;
   }
 
   &-empty {
@@ -330,7 +347,6 @@ export default {
     &-table {
       display: grid;
       grid-template-columns: auto auto max-content max-content auto auto max-content;
-      padding: 30px 0;
     }
 
     &-empty {
