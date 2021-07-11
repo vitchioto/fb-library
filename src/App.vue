@@ -15,7 +15,7 @@
         class="logged-out-page"
       >
         <h1
-          v-html="'Kamoškovská knižnica'"
+          v-html="$t('headline')"
         />
         <button
           class="button is-white is-outlined"
