@@ -1,20 +1,28 @@
 <template>
-  <div class="app">
-    <div
-      v-if="userId && loaded"
-      class="library"
-    >
-      <router-view />
-    </div>
-    <div
-      v-if="!userId && loaded"
-      class="log-out-page"
-    >
-      <button
-        class="button is-primary"
-        @click="logIn()"
-        v-html="$t('logInButton')"
-      />
+  <div
+    class="app"
+    :class="{'app--logged-out': !userId && loaded}"
+  >
+    <div class="container">
+      <div
+        v-if="userId && loaded"
+        class="library"
+      >
+        <router-view />
+      </div>
+      <div
+        v-if="!userId && loaded"
+        class="logged-out-page"
+      >
+        <h1
+          v-html="'Kamoškovská knižnica'"
+        />
+        <button
+          class="button is-white is-outlined"
+          @click="logIn()"
+          v-html="$t('logInButton')"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -23,7 +31,6 @@
 import firebase from 'firebase/app';
 import 'firebase/analytics';
 import 'firebase/auth';
-import '../node_modules/bulma/css/bulma.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 
 export default {
@@ -91,13 +98,40 @@ export default {
 </script>
 
 <style lang="scss">
+$primary: #1877F2;
+
+@import '../node_modules/bulma/css/bulma.css';
+
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/font/OpenSans-Regular.ttf')  format('truetype');
+}
+
 .app {
+  &--logged-out {
+    background: #1877f2;
+    color: #fff;
+  }
+}
+
+.container {
+  font-family: 'OpenSans', sans-serif;
   margin: 0 auto;
   max-width: 1200px;
   padding: 20px 10px;
 }
 
-.log-out-page {
+h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.logged-out-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
   text-align: center;
 }
 </style>
