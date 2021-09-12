@@ -69,7 +69,7 @@ export default {
         clientHeight,
       } = document.documentElement;
 
-      if (scrollTop + clientHeight >= scrollHeight - 5
+      if (scrollTop + clientHeight >= scrollHeight - 100
         && this.$store.state.isMoreDocuments
         && !this.$store.state.loadingInProgress) {
         this.$store.state.loadingInProgress = true;
