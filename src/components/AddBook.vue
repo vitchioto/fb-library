@@ -9,7 +9,7 @@
           <label class="label label-isbn">
             {{ $t('isbn') }}
             <input
-              type="text"
+              type="number"
               class="input"
               :placeholder="$t('placeholderIsbn')"
               v-model="isbn"
