@@ -17,6 +17,8 @@
           </label>
           <button
             class="button is-primary"
+            :class="{'is-loading' : bookIsLoading}"
+            :disabled="bookIsLoading"
             @click="getBook()"
             v-html="$t('submit')"
           />
@@ -106,6 +108,8 @@
         />
         <button
           class="button is-primary"
+          :class="{'is-loading' : bookIsSent}"
+          :disabled="bookIsSent"
           @click="submitBook()"
           v-html="$t('submit')"
         />
@@ -124,6 +128,8 @@ export default {
   data() {
     return {
       author: '',
+      bookIsLoading: false,
+      bookIsSent: false,
       errorBookNotFound: false,
       errorMaxLength: [],
       errorRequired: [],
@@ -139,6 +145,7 @@ export default {
     },
     async getBook() {
       this.errorBookNotFound = false;
+      this.bookIsLoading = true;
       const response = await this.$store.dispatch('getBook', this.isbn);
       if (response) {
         // eslint-disable-next-line object-curly-newline
@@ -150,8 +157,10 @@ export default {
       } else {
         this.errorBookNotFound = true;
       }
+      this.bookIsLoading = false;
     },
     async submitBook() {
+      this.bookIsSent = true;
       const isValid = this.validate();
       if (isValid) {
         const book = {
@@ -163,6 +172,7 @@ export default {
         await this.$store.dispatch('submitBook', book);
         this.closeForm();
       }
+      this.bookIsSent = false;
     },
     validate() {
       this.errorMaxLength = [];

@@ -132,6 +132,7 @@ $primary: #1877f2;
 @import '../node_modules/bulma/sass/form/tools.sass';
 @import '../node_modules/bulma/sass/base/minireset.sass';
 @import '../node_modules/bulma/sass/base/generic.sass';
+@import '../node_modules/bulma/sass/base/animations.sass';
 
 @font-face {
   font-family: 'OpenSans';
