@@ -7,7 +7,7 @@ export default {
     state.books.splice(bookIndex, 1);
   },
   SET_BOOKS(state, payload) {
-    state.books = payload;
+    state.books.push(...payload);
   },
   SET_FRIENDS(state, payload) {
     state.friends = payload;

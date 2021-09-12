@@ -20,13 +20,24 @@ export default {
     const ids = [...friendIds, state.userData.uid];
     const books = [];
 
-    const querySnapshot = await db.collection('books').where('ownerFbId', 'in', ids).orderBy('title').get();
+    const startPosition = state.lastDoc || 0;
+
+    const querySnapshot = await db.collection('books')
+      .where('ownerFbId', 'in', ids)
+      .orderBy('title')
+      .startAfter(startPosition)
+      .limit(state.pageSize)
+      .get();
     querySnapshot.forEach((doc) => {
       const record = doc.data();
       record.id = doc.id;
       books.push(record);
     });
+    const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+    state.lastDoc = lastDoc;
+    state.isMoreDocuments = books.length === state.pageSize;
     commit('SET_BOOKS', books);
+    state.loadingInProgress = false;
     return books;
   },
   async getFriends({ state, commit }) {

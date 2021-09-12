@@ -61,6 +61,24 @@ export default {
     this.firebaseObject = firebase;
 
     this.loadUser();
+
+    window.addEventListener('scroll', () => {
+      const {
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+      } = document.documentElement;
+
+      if (scrollTop + clientHeight >= scrollHeight - 5
+        && this.$store.state.isMoreDocuments
+        && !this.$store.stateloadingInProgress) {
+        this.$store.stateloadingInProgress = true;
+        this.$store.dispatch('getBooks');
+      }
+    },
+    {
+      passive: true,
+    });
   },
   methods: {
     loadUser() {
