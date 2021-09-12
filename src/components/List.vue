@@ -147,6 +147,14 @@
           </div>
         </div>
       </div>
+      <div
+        v-if="loadingInProgress"
+        class="loader"
+      >
+        <div
+          class="fas fa-spinner fa-pulse"
+        />
+      </div>
     </div>
     <div
       v-else
@@ -187,6 +195,9 @@ export default {
     },
     friends() {
       return this.$store.state.friends;
+    },
+    loadingInProgress() {
+      return this.$store.state.loadingInProgress;
     },
     userFbId() {
       return this.$store.state.userData.uid;
@@ -278,6 +289,11 @@ export default {
       content: attr(data-label);
     }
   }
+}
+
+.loader {
+  grid-column: span 7;
+  text-align: center;
 }
 
 @media only screen and (min-width: 600px) {

@@ -71,8 +71,8 @@ export default {
 
       if (scrollTop + clientHeight >= scrollHeight - 5
         && this.$store.state.isMoreDocuments
-        && !this.$store.stateloadingInProgress) {
-        this.$store.stateloadingInProgress = true;
+        && !this.$store.state.loadingInProgress) {
+        this.$store.state.loadingInProgress = true;
         this.$store.dispatch('getBooks');
       }
     },
