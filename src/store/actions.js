@@ -13,6 +13,11 @@ export default {
     const token = localStorage.getItem('vv_fb_library');
     return token;
   },
+  async getBook(_, payload) {
+    const response = await fetch(`https://api.vladovic.sk/getbook.php?isbn=${payload}`);
+    const data = await response.json();
+    return data;
+  },
   async getBooks({ state, commit }) {
     const app = firebase.app();
     const db = firebase.firestore(app);

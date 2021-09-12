@@ -5,17 +5,29 @@
       <div
         class="form"
       >
+        <div class="container-isbn">
+          <label class="label label-isbn">
+            {{ $t('isbn') }}
+            <input
+              type="text"
+              class="input"
+              :placeholder="$t('placeholderIsbn')"
+              v-model="isbn"
+            >
+          </label>
+          <button
+            class="button is-primary"
+            @click="getBook()"
+            v-html="$t('submit')"
+          />
+          <div
+            v-if="errorBookNotFound"
+            class="error"
+            v-html="$t('errorBookNotFound')"
+          />
+        </div>
         <label class="label">
-          {{ $t('isbn') }}
-          <input
-            type="text"
-            class="input"
-            :placeholder="$t('placeholderIsbn')"
-            v-model="isbn"
-          >
-        </label>
-        <label class="label">
-          {{ $t('title') }}
+          {{ $t('title') }} {{ $t('requiredSign') }}
           <input
             type="text"
             class="input"
@@ -36,7 +48,7 @@
           v-html="$t('errorRequired')"
         />
         <label class="label">
-          {{ $t('author') }}
+          {{ $t('author') }} {{ $t('requiredSign') }}
           <input
             type="text"
             class="input"
@@ -72,7 +84,7 @@
           v-html="$t('errorMaxLength')"
         />
         <label class="label">
-          {{ $t('language') }}
+          {{ $t('language') }} {{ $t('requiredSign') }}
           <input
             type="text"
             class="input"
@@ -112,6 +124,7 @@ export default {
   data() {
     return {
       author: '',
+      errorBookNotFound: false,
       errorMaxLength: [],
       errorRequired: [],
       isbn: '',
@@ -123,6 +136,20 @@ export default {
   methods: {
     closeForm() {
       this.$emit('closeForm');
+    },
+    async getBook() {
+      this.errorBookNotFound = false;
+      const response = await this.$store.dispatch('getBook', this.isbn);
+      if (response) {
+        // eslint-disable-next-line object-curly-newline
+        const { author, language, theme, title } = response;
+        this.author = author.trim();
+        this.language = language.trim();
+        this.theme = theme.trim();
+        this.title = title.trim();
+      } else {
+        this.errorBookNotFound = true;
+      }
     },
     async submitBook() {
       const isValid = this.validate();
@@ -156,12 +183,27 @@ export default {
 </script>
 
 <style lang="scss">
+.container-isbn {
+  align-items: flex-end;
+  border-bottom: 1px solid #fff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 40px;
+}
+
 .label {
   color: #fff;
+  &-isbn {
+    flex: 1;
+    margin: 0 10px 0 0 !important;
+  }
 }
 
 .error {
   color: hsl(348, 100%, 61%);
   margin-bottom: 10px;
+  width: 100%;
 }
 </style>
