@@ -27,21 +27,50 @@ export default {
 
     const startPosition = state.lastDoc || 0;
 
-    const querySnapshot = await db.collection('books')
-      .where('ownerFbId', 'in', ids)
-      .orderBy('title')
-      .startAfter(startPosition)
-      .limit(state.pageSize)
-      .get();
+    let querySnapshot;
+    if (state.filterType === 1) {
+      querySnapshot = await db.collection('books')
+        .where('ownerFbId', '==', state.userData.uid)
+        .orderBy('title')
+        .startAfter(startPosition)
+        .limit(state.pageSize)
+        .get();
+    } else if (state.filterType === 2) {
+      querySnapshot = await db.collection('books')
+        .where('ownerFbId', '==', state.userData.uid)
+        .where('renterFbId', '!=', '')
+        .orderBy('renterFbId')
+        .startAfter(startPosition)
+        .limit(state.pageSize)
+        .get();
+    } else if (state.filterType === 3) {
+      querySnapshot = await db.collection('books')
+        .where('renterFbId', '==', state.userData.uid)
+        .orderBy('title')
+        .startAfter(startPosition)
+        .limit(state.pageSize)
+        .get();
+    } else {
+      querySnapshot = await db.collection('books')
+        .where('ownerFbId', 'in', ids)
+        .orderBy('title')
+        .startAfter(startPosition)
+        .limit(state.pageSize)
+        .get();
+    }
     querySnapshot.forEach((doc) => {
       const record = doc.data();
       record.id = doc.id;
       books.push(record);
     });
+    if (startPosition) {
+      commit('ADD_BOOKS', books);
+    } else {
+      commit('SET_BOOKS', books);
+    }
     const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
-    state.lastDoc = lastDoc;
+    commit('SET_LAST_DOCUMENT', lastDoc);
     state.isMoreDocuments = books.length === state.pageSize;
-    commit('SET_BOOKS', books);
     state.loadingInProgress = false;
     return books;
   },

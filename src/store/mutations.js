@@ -2,15 +2,24 @@ export default {
   ADD_BOOK(state, payload) {
     state.books.push(payload);
   },
+  ADD_BOOKS(state, payload) {
+    state.books.push(...payload);
+  },
   DELETE_BOOK(state, bookId) {
     const bookIndex = state.books.findIndex((item) => item.id === bookId);
     state.books.splice(bookIndex, 1);
   },
   SET_BOOKS(state, payload) {
-    state.books.push(...payload);
+    state.books = payload;
+  },
+  SET_FILTER_TYPE(state, payload) {
+    state.filterType = payload;
   },
   SET_FRIENDS(state, payload) {
     state.friends = payload;
+  },
+  SET_LAST_DOCUMENT(state, payload) {
+    state.lastDoc = payload;
   },
   SET_USER_DATA(state, payload) {
     state.userData = payload;

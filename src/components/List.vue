@@ -13,35 +13,47 @@
         </span>
       </div>
       <div class="list-filters">
-        <label class="radio">
+        <label
+          class="radio"
+        >
           <input
             type="radio"
             value="0"
             v-model="filterType"
+            @click="setFilterType(0)"
           >
           {{ $t('filterAllBooks') }}
         </label>
-        <label class="radio">
+        <label
+          class="radio"
+        >
           <input
             type="radio"
             value="1"
             v-model="filterType"
+            @click="setFilterType(1)"
           >
           {{ $t('filterMyBooks') }}
         </label>
-        <label class="radio">
+        <label
+          class="radio"
+        >
           <input
             type="radio"
             value="2"
             v-model="filterType"
+            @click="setFilterType(2)"
           >
           {{ $t('filterMyRentedBooks') }}
         </label>
-        <label class="radio">
+        <label
+          class="radio"
+        >
           <input
             type="radio"
             value="3"
             v-model="filterType"
+            @click="setFilterType(3)"
           >
           {{ $t('filterMyBorrowedBooks') }}
         </label>
@@ -181,17 +193,15 @@ export default {
   },
   computed: {
     filteredBooks() {
-      let { books } = this;
-      if (this.filterType === '1') books = books.filter((book) => book.ownerFbId === this.userFbId);
-      if (this.filterType === '2') books = books.filter((book) => book.renterFbId === this.userFbId);
-      if (this.filterType === '3') books = books.filter((book) => book.ownerFbId === this.userFbId && book.renterFbId);
-      if (!this.filterString) return books;
+      return this.books;
+      /*
       const filterStringInLower = this.filterString.toLowerCase();
       return books.filter((book) => book.title.toLowerCase().includes(filterStringInLower)
         || book.author.toLowerCase().includes(filterStringInLower)
         || book.theme.toLowerCase().includes(filterStringInLower)
         || book.language.toLowerCase().includes(filterStringInLower)
         || book.ownerName.toLowerCase().includes(filterStringInLower));
+        */
     },
     friends() {
       return this.$store.state.friends;
@@ -207,6 +217,14 @@ export default {
     openAddForm() {
       this.$emit('openAddForm');
     },
+    openUpdateForm(id) {
+      this.$emit('openUpdateForm', id);
+    },
+    setFilterType(type) {
+      this.$store.commit('SET_FILTER_TYPE', type);
+      this.$store.commit('SET_LAST_DOCUMENT', 0);
+      this.$store.dispatch('getBooks');
+    },
     toggleBookDetails(id) {
       const index = this.openDetails.findIndex((item) => item === id);
       if (index === -1) {
@@ -214,9 +232,6 @@ export default {
       } else {
         this.openDetails.splice(index, 1);
       }
-    },
-    openUpdateForm(id) {
-      this.$emit('openUpdateForm', id);
     },
   },
 };

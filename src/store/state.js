@@ -1,5 +1,6 @@
 export default {
   books: [],
+  filterType: 0,
   friends: [],
   isMoreDocuments: true,
   lastDoc: null,
