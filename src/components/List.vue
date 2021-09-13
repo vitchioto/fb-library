@@ -5,11 +5,16 @@
         <input
           class="input"
           type="text"
-          :placeholder="$t('placeholderSearch')"
+          :placeholder="`Nefunguje :/ $t('placeholderSearch')`"
           v-model="filterString"
         >
-        <span class="icon is-small is-right">
-          <i class="fas fa-search"></i>
+        <span
+          class="icon is-small is-right search-icon"
+          @click="search()"
+        >
+          <i
+            class="fas fa-search"
+          />
         </span>
       </div>
       <div class="list-filters">
@@ -220,6 +225,11 @@ export default {
     openUpdateForm(id) {
       this.$emit('openUpdateForm', id);
     },
+    search() {
+      this.$store.commit('SET_FILTER_STRING', this.filterString);
+      this.$store.commit('SET_LAST_DOCUMENT', 0);
+      this.$store.dispatch('getBooks');
+    },
     setFilterType(type) {
       this.$store.commit('SET_FILTER_TYPE', type);
       this.$store.commit('SET_LAST_DOCUMENT', 0);
@@ -238,6 +248,11 @@ export default {
 </script>
 
 <style lang="scss">
+.search-icon {
+  cursor: pointer;
+  pointer-events: all !important;
+}
+
 .list {
   &-filters {
     .radio {

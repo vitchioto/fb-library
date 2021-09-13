@@ -25,10 +25,47 @@ export default {
     const ids = [...friendIds, state.userData.uid];
     const books = [];
 
+    let querySnapshot;
+
     const startPosition = state.lastDoc || 0;
 
-    let querySnapshot;
-    if (state.filterType === 1) {
+    const { filterString } = state;
+    if (filterString) {
+      if (state.filterType === 1) {
+        querySnapshot = await db.collection('books')
+          .where('ownerFbId', '==', state.userData.uid)
+          .where('title', '>=', filterString)
+          .where('title', '<', `${filterString}ako\uf8ff`)
+          .orderBy('title')
+          .startAfter(startPosition)
+          .limit(state.pageSize)
+          .get();
+      } else if (state.filterType === 2) {
+        querySnapshot = await db.collection('books')
+          .where('ownerFbId', '==', state.userData.uid)
+          .where('renterFbId', '!=', '')
+          .orderBy('renterFbId')
+          .startAfter(startPosition)
+          .limit(state.pageSize)
+          .get();
+      } else if (state.filterType === 3) {
+        querySnapshot = await db.collection('books')
+          .where('renterFbId', '==', state.userData.uid)
+          .orderBy('title')
+          .startAfter(startPosition)
+          .limit(state.pageSize)
+          .get();
+      } else {
+        querySnapshot = await db.collection('books')
+          .where('ownerFbId', 'in', ids)
+          .where('title', '>=', filterString)
+          .where('title', '<', `${filterString}ako\uf8ff`)
+          .orderBy('title')
+          .startAfter(startPosition)
+          .limit(state.pageSize)
+          .get();
+      }
+    } else if (state.filterType === 1) {
       querySnapshot = await db.collection('books')
         .where('ownerFbId', '==', state.userData.uid)
         .orderBy('title')

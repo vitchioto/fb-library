@@ -12,6 +12,9 @@ export default {
   SET_BOOKS(state, payload) {
     state.books = payload;
   },
+  SET_FILTER_STRING(state, payload) {
+    state.filterString = payload;
+  },
   SET_FILTER_TYPE(state, payload) {
     state.filterType = payload;
   },
