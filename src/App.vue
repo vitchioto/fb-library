@@ -81,12 +81,16 @@ export default {
     });
   },
   methods: {
-    loadUser() {
+    async loadUser() {
       firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
           this.$store.commit('SET_USER_ID', user.uid);
           this.$store.commit('SET_USER_DATA', user.providerData[0]);
-          const userToken = await this.$store.dispatch('getAccessToken');
+          let userToken = await this.$store.dispatch('getAccessToken');
+          if (!userToken) {
+            await this.logIn();
+            userToken = await this.$store.dispatch('getAccessToken');
+          }
           this.$store.commit('SET_USER_TOKEN', userToken);
           await this.$store.dispatch('getFriends');
           this.$store.dispatch('getBooks');
@@ -97,7 +101,7 @@ export default {
     logIn() {
       const provider = new firebase.auth.FacebookAuthProvider();
       provider.addScope('user_friends');
-      firebase
+      return firebase
         .auth()
         .signInWithPopup(provider)
         .then((result) => {
