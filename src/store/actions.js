@@ -1,6 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
+const server = require('@ibaneeez/fb-library-server');
+
 export default {
   async deleteBook({ commit }, bookId) {
     const app = firebase.app();
@@ -17,6 +19,29 @@ export default {
     const response = await fetch(`https://api.vladovic.sk/getbook.php?isbn=${payload}`);
     const data = await response.json();
     return data;
+  },
+  async getBooks2({ state }) {
+    const defaultClient = server.ApiClient.instance;
+    // Configure Bearer (JWT) access token for authorization: openid
+    console.log('defaultClient.authentications', defaultClient.authentications);
+    const { openid } = defaultClient.authentications;
+    openid.accessToken = state.userData.uid;
+
+    const api = new server.BookApi();
+    const opts = {
+      searchTerm: 'searchTerm_example', // {String}
+      lent: true, // {Boolean}
+      borrowed: true, // {Boolean}
+    };
+
+    api.getBooks(opts, (error, data, response) => {
+      console.log('response', response);
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(`API called successfully. Returned data: ${data}`);
+      }
+    });
   },
   async getBooks({ state, commit }) {
     const app = firebase.app();

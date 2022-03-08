@@ -94,6 +94,7 @@ export default {
           this.$store.commit('SET_USER_TOKEN', userToken);
           await this.$store.dispatch('getFriends');
           this.$store.dispatch('getBooks');
+          this.$store.dispatch('getBooks2');
         }
         this.loaded = true;
       });
