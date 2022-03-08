@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
-    "@ibaneeez/fb-library-server": "0.0.1",
+    "@ibaneeez/fb-library-server": "0.0.6",
     "bulma": "^0.9.3",
     "core-js": "^3.6.5",
     "firebase": "^8.6.7",
