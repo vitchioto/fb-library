@@ -53,8 +53,7 @@ export default {
     localStorage.setItem('vv_fb_library', payload);
   },
   async submitBook({ state, commit }, payload) {
-    const app = firebase.app();
-    const db = firebase.firestore(app);
+    const api = new BookApi();
 
     const newBook = {
       ownerName: state.userData.displayName,
@@ -64,8 +63,8 @@ export default {
       uid: state.userId,
       ...payload,
     };
-    const bookEntry = await db.collection('books').add(newBook);
-    newBook.id = bookEntry.id;
+    const response = await api.submitBook(newBook);
+    newBook.id = response.id;
     commit('ADD_BOOK', newBook);
   },
   async updateBook({ commit }, [payload, bookId]) {
