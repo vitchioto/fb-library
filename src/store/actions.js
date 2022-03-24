@@ -9,6 +9,7 @@ export default {
   },
   async deleteBook({ commit }, bookId) {
     const api = new BookApi();
+
     await api.deleteBook(bookId);
     commit('DELETE_BOOK', bookId);
   },
@@ -23,6 +24,7 @@ export default {
   },
   async getBooks({ state, commit }) {
     const api = new BookApi();
+
     const opts = {
       // searchTerm: '',
       // status: null,
@@ -65,6 +67,7 @@ export default {
   },
   async updateBook({ state, commit }, [payload, bookId]) {
     const api = new BookApi();
+
     const updatedBook = {
       ownerName: state.userData.displayName,
       ownerFbId: state.userData.uid,
