@@ -93,8 +93,9 @@ export default {
           }
           this.$store.commit('SET_USER_TOKEN', userToken);
           await this.$store.dispatch('getFriends');
+          const idToken = await user.getIdToken();
+          this.$store.dispatch('initApiClient', idToken);
           this.$store.dispatch('getBooks');
-          this.$store.dispatch('getBooks2');
         }
         this.loaded = true;
       });

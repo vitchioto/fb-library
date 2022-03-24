@@ -1,4 +1,5 @@
 export default {
+  apiClient: null,
   books: [],
   filterString: null,
   filterType: 0,

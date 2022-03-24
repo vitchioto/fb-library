@@ -9,6 +9,9 @@ export default {
     const bookIndex = state.books.findIndex((item) => item.id === bookId);
     state.books.splice(bookIndex, 1);
   },
+  SET_API_CLIENT(state, payload) {
+    state.apiClient = payload;
+  },
   SET_BOOKS(state, payload) {
     state.books = payload;
   },

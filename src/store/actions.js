@@ -1,9 +1,14 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-
-const server = require('@ibaneeez/fb-library-server');
+import { ApiClient, BookApi } from '@ibaneeez/fb-library-server';
 
 export default {
+  initApiClient({ commit }, idToken) {
+    const apiClient = ApiClient.instance;
+    apiClient.basePath = 'https://vitchito-fb-library-api.herokuapp.com';
+    apiClient.authentications.openid.accessToken = idToken;
+    commit('SET_API_CLIENT', apiClient);
+  },
   async deleteBook({ commit }, bookId) {
     const app = firebase.app();
     const db = firebase.firestore(app);
@@ -20,121 +25,17 @@ export default {
     const data = await response.json();
     return data;
   },
-  async getBooks2({ state }) {
-    const defaultClient = server.ApiClient.instance;
-    // Configure Bearer (JWT) access token for authorization: openid
-    console.log('defaultClient.authentications', defaultClient.authentications);
-    const { openid } = defaultClient.authentications;
-    openid.accessToken = state.userData.uid;
-
-    const api = new server.BookApi();
+  async getBooks({ state, commit }) {
+    const api = new BookApi();
     const opts = {
-      searchTerm: 'searchTerm_example', // {String}
-      lent: true, // {Boolean}
-      borrowed: true, // {Boolean}
+      // searchTerm: '',
+      // status: null,
+      fbAccessToken: state.userToken,
     };
 
-    api.getBooks(opts, (error, data, response) => {
-      console.log('response', response);
-      if (error) {
-        console.error(error);
-      } else {
-        console.log(`API called successfully. Returned data: ${data}`);
-      }
-    });
-  },
-  async getBooks({ state, commit }) {
-    const app = firebase.app();
-    const db = firebase.firestore(app);
-    const friendIds = state.friends.map((item) => item.id);
-    const ids = [...friendIds, state.userData.uid];
-    const books = [];
-
-    let querySnapshot;
-
-    const startPosition = state.lastDoc || 0;
-
-    const { filterString } = state;
-    if (filterString) {
-      if (state.filterType === 1) {
-        querySnapshot = await db.collection('books')
-          .where('ownerFbId', '==', state.userData.uid)
-          .where('title', '>=', filterString)
-          .where('title', '<', `${filterString}ako\uf8ff`)
-          .orderBy('title')
-          .startAfter(startPosition)
-          .limit(state.pageSize)
-          .get();
-      } else if (state.filterType === 2) {
-        querySnapshot = await db.collection('books')
-          .where('ownerFbId', '==', state.userData.uid)
-          .where('renterFbId', '!=', '')
-          .orderBy('renterFbId')
-          .startAfter(startPosition)
-          .limit(state.pageSize)
-          .get();
-      } else if (state.filterType === 3) {
-        querySnapshot = await db.collection('books')
-          .where('renterFbId', '==', state.userData.uid)
-          .orderBy('title')
-          .startAfter(startPosition)
-          .limit(state.pageSize)
-          .get();
-      } else {
-        querySnapshot = await db.collection('books')
-          .where('ownerFbId', 'in', ids)
-          .where('title', '>=', filterString)
-          .where('title', '<', `${filterString}ako\uf8ff`)
-          .orderBy('title')
-          .startAfter(startPosition)
-          .limit(state.pageSize)
-          .get();
-      }
-    } else if (state.filterType === 1) {
-      querySnapshot = await db.collection('books')
-        .where('ownerFbId', '==', state.userData.uid)
-        .orderBy('title')
-        .startAfter(startPosition)
-        .limit(state.pageSize)
-        .get();
-    } else if (state.filterType === 2) {
-      querySnapshot = await db.collection('books')
-        .where('ownerFbId', '==', state.userData.uid)
-        .where('renterFbId', '!=', '')
-        .orderBy('renterFbId')
-        .startAfter(startPosition)
-        .limit(state.pageSize)
-        .get();
-    } else if (state.filterType === 3) {
-      querySnapshot = await db.collection('books')
-        .where('renterFbId', '==', state.userData.uid)
-        .orderBy('title')
-        .startAfter(startPosition)
-        .limit(state.pageSize)
-        .get();
-    } else {
-      querySnapshot = await db.collection('books')
-        .where('ownerFbId', 'in', ids)
-        .orderBy('title')
-        .startAfter(startPosition)
-        .limit(state.pageSize)
-        .get();
-    }
-    querySnapshot.forEach((doc) => {
-      const record = doc.data();
-      record.id = doc.id;
-      books.push(record);
-    });
-    if (startPosition) {
-      commit('ADD_BOOKS', books);
-    } else {
-      commit('SET_BOOKS', books);
-    }
-    const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
-    commit('SET_LAST_DOCUMENT', lastDoc);
-    state.isMoreDocuments = books.length === state.pageSize;
-    state.loadingInProgress = false;
-    return books;
+    const response = await api.getBooks(opts);
+    console.log('response', response);
+    commit('SET_BOOKS', response);
   },
   async getFriends({ state, commit }) {
     const token = state.userToken;
