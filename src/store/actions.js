@@ -67,18 +67,15 @@ export default {
     newBook.id = response.id;
     commit('ADD_BOOK', newBook);
   },
-  async updateBook({ commit }, [payload, bookId]) {
-    const app = firebase.app();
-    const db = firebase.firestore(app);
-
-    await db.collection('books').doc(bookId).update({
-      author: payload.author,
-      language: payload.language,
-      renterFbId: payload.renterFbId,
-      renterName: payload.renterName,
-      theme: payload.theme,
-      title: payload.title,
-    });
-    commit('UPDATE_BOOK', [payload, bookId]);
+  async updateBook({ state, commit }, [payload, bookId]) {
+    const api = new BookApi();
+    const updatedBook = {
+      ownerName: state.userData.displayName,
+      ownerFbId: state.userData.uid,
+      uid: state.userId,
+      ...payload,
+    };
+    await api.updateBook(bookId, updatedBook);
+    commit('UPDATE_BOOK', [updatedBook, bookId]);
   },
 };
