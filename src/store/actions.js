@@ -1,4 +1,4 @@
-import { ApiClient, BookApi } from '@ibaneeez/fb-library-server';
+import { ApiClient, BookApi, IsbnDataApi } from '@ibaneeez/fb-library-server';
 
 export default {
   initApiClient({ commit }, idToken) {
@@ -18,9 +18,10 @@ export default {
     return token;
   },
   async getBook(_, payload) {
-    const response = await fetch(`https://api.vladovic.sk/getbook.php?isbn=${payload}`);
-    const data = await response.json();
-    return data;
+    const api = new IsbnDataApi();
+
+    const response = await api.getISBNData(payload);
+    return response;
   },
   async getBooks({ state, commit }) {
     const api = new BookApi();
