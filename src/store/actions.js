@@ -1,5 +1,3 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
 import { ApiClient, BookApi } from '@ibaneeez/fb-library-server';
 
 export default {
@@ -10,10 +8,8 @@ export default {
     commit('SET_API_CLIENT', apiClient);
   },
   async deleteBook({ commit }, bookId) {
-    const app = firebase.app();
-    const db = firebase.firestore(app);
-
-    await db.collection('books').doc(bookId).delete();
+    const api = new BookApi();
+    await api.deleteBook(bookId);
     commit('DELETE_BOOK', bookId);
   },
   getAccessToken() {
