@@ -23,9 +23,9 @@
         >
           <input
             type="radio"
-            value="0"
-            v-model="filterType"
-            @click="setFilterType(0)"
+            value=""
+            :checked="filterType === ''"
+            @click="setFilterType('')"
           >
           {{ $t('filterAllBooks') }}
         </label>
@@ -34,9 +34,9 @@
         >
           <input
             type="radio"
-            value="1"
-            v-model="filterType"
-            @click="setFilterType(1)"
+            value="OWNED"
+            :checked="filterType === 'OWNED'"
+            @click="setFilterType('OWNED')"
           >
           {{ $t('filterMyBooks') }}
         </label>
@@ -45,9 +45,9 @@
         >
           <input
             type="radio"
-            value="2"
-            v-model="filterType"
-            @click="setFilterType(2)"
+            value="LENT"
+            :checked="filterType === 'LENT'"
+            @click="setFilterType('LENT')"
           >
           {{ $t('filterMyRentedBooks') }}
         </label>
@@ -56,9 +56,9 @@
         >
           <input
             type="radio"
-            value="3"
-            v-model="filterType"
-            @click="setFilterType(3)"
+            value="BORROWED"
+            :checked="filterType === 'BORROWED'"
+            @click="setFilterType('BORROWED')"
           >
           {{ $t('filterMyBorrowedBooks') }}
         </label>
@@ -75,7 +75,7 @@
       v-html="$t('noFriendsMessage')"
     />
     <div
-      v-if="filteredBooks && filteredBooks.length"
+      v-if="books && books.length"
       class="list-table"
     >
       <div
@@ -107,7 +107,7 @@
         v-text="$t('functions')"
       />
       <div
-        v-for="(book, index) in filteredBooks"
+        v-for="(book, index) in books"
         :key="index"
         class="book"
         @click="toggleBookDetails(index)"
@@ -192,22 +192,11 @@ export default {
   data() {
     return {
       filterString: null,
-      filterType: '0',
+      filterType: '',
       openDetails: [],
     };
   },
   computed: {
-    filteredBooks() {
-      return this.books;
-      /*
-      const filterStringInLower = this.filterString.toLowerCase();
-      return books.filter((book) => book.title.toLowerCase().includes(filterStringInLower)
-        || book.author.toLowerCase().includes(filterStringInLower)
-        || book.theme.toLowerCase().includes(filterStringInLower)
-        || book.language.toLowerCase().includes(filterStringInLower)
-        || book.ownerName.toLowerCase().includes(filterStringInLower));
-        */
-    },
     friends() {
       return this.$store.state.friends;
     },
@@ -227,12 +216,11 @@ export default {
     },
     search() {
       this.$store.commit('SET_FILTER_STRING', this.filterString);
-      this.$store.commit('SET_LAST_DOCUMENT', 0);
       this.$store.dispatch('getBooks');
     },
     setFilterType(type) {
-      this.$store.commit('SET_FILTER_TYPE', type);
-      this.$store.commit('SET_LAST_DOCUMENT', 0);
+      this.filterType = type;
+      this.$store.commit('SET_FILTER_TYPE', this.filterType);
       this.$store.dispatch('getBooks');
     },
     toggleBookDetails(id) {

@@ -24,9 +24,6 @@ export default {
   SET_FRIENDS(state, payload) {
     state.friends = payload;
   },
-  SET_LAST_DOCUMENT(state, payload) {
-    state.lastDoc = payload;
-  },
   SET_USER_DATA(state, payload) {
     state.userData = payload;
   },

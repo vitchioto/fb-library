@@ -27,8 +27,8 @@ export default {
     const api = new BookApi();
 
     const opts = {
-      // searchTerm: '',
-      // status: null,
+      searchTerm: state.filterString,
+      status: state.filterType,
       fbAccessToken: state.userToken,
     };
 
