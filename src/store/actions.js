@@ -70,6 +70,7 @@ export default {
     const api = new BookApi();
 
     const updatedBook = {
+      id: bookId,
       ownerName: state.userData.displayName,
       ownerFbId: state.userData.uid,
       uid: state.userId,
