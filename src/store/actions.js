@@ -33,7 +33,6 @@ export default {
     };
 
     const response = await api.getBooks(opts);
-    console.log('response', response);
     commit('SET_BOOKS', response);
   },
   async getFriends({ state, commit }) {
